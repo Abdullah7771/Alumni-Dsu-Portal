@@ -1,4 +1,3 @@
-
 import {useState, useEffect, ChangeEvent} from 'react'
 import CreatableSelect from 'react-select/creatable'
 import Button from 'react-bootstrap/Button'
@@ -461,6 +460,7 @@ const AcademicModal: React.FC<TargetModalProps> = ({
                     <Form.Group controlId='title'>
                       <Form.Label>Title</Form.Label>
                       <Form.Control
+                        className='mb-2'
                         type='text'
                         name='qualification'
                         key='qualification'
@@ -479,6 +479,7 @@ const AcademicModal: React.FC<TargetModalProps> = ({
                 <Form.Group controlId='institute'>
                   <Form.Label>Institute</Form.Label>
                   <Form.Control
+                    className='mb-2'
                     type='text'
                     name='institute'
                     value={formik.values.institute}
@@ -493,6 +494,7 @@ const AcademicModal: React.FC<TargetModalProps> = ({
                 <Form.Group controlId='institute_address'>
                   <Form.Label>Location</Form.Label>
                   <Form.Control
+                    className='mb-2'
                     type='text'
                     name='institute_address'
                     value={formik.values.institute_address}
@@ -507,6 +509,7 @@ const AcademicModal: React.FC<TargetModalProps> = ({
                 <Form.Group controlId='start_year' className='mb-3'>
                   <Form.Label>Start Date</Form.Label>
                   <Form.Control
+                    className='mb-2'
                     type='date'
                     name='start_year'
                     value={formData.start_year}
@@ -524,6 +527,7 @@ const AcademicModal: React.FC<TargetModalProps> = ({
                 <Form.Group controlId='end_year' className='mb-3'>
                   <Form.Label>End Date</Form.Label>
                   <Form.Control
+                    className='mb-2'
                     type='date'
                     name='end_year'
                     value={formData.end_year}
@@ -608,17 +612,33 @@ const AcademicModal: React.FC<TargetModalProps> = ({
                   />
 
                   {formData.certificate ? (
-                    <span>{formData.certificate}</span>
+                    <span>Chosen File: {formData.certificate}</span>
                   ) : selectedFile ? (
-                    <span>{selectedFile.name}</span>
+                    <span>Chosen File: {selectedFile.name}</span>
                   ) : (
                     <span className='text-danger'>Please choose a file.</span>
                   )}
+
+                  <br />
+                  {/* <button
+                    className='btn btn-primary btn-sm me-2 mb-2'
+                    onClick={() => {
+                      setSelectedFile(null)
+                      formik.values.has_certificate = false
+                      formData.has_certificate = false
+                    }}
+                  >
+                    Clear File
+                  </button> */}
+
+                  <span className='text-primary fw-bold mt-2'>
+                    File Format Supported : .pdf .doc .docx .html .png .jpeg .jpg
+                  </span>
                 </Form.Group>
 
                 <div className=' text-center'>
                   <Button type='submit' className='btn btn-primary me-2 mt-2'>
-                    {editUser.id ? 'Update User' : 'Add User'}
+                    {editUser.id ? 'Update Record' : 'Add Record'}
                   </Button>
                   <Button className='btn btn-secondary mt-2 ' onClick={closeModal}>
                     Close

@@ -4,9 +4,9 @@ import {AcademicModal} from '../AcademicModal'
 import axios from 'axios'
 import LoadingScreen from '../../LoadingScreen/LoadingScreen'
 import moment from 'moment'
+import {renderResumeContent} from '../../../AccountPage'
 
-
-const localid=localStorage.getItem('sub');
+const localid = localStorage.getItem('sub')
 
 const CertificationTable = () => {
   const [showModal, setShowModal] = useState(false)
@@ -21,15 +21,15 @@ const CertificationTable = () => {
       const response = await axios.get(
         `https://amsbackend-ghub.onrender.com/academics/user/${localid}`
       )
-      const userData = response.data     
-      const filteredUsers: any[] = [];
-      userData.forEach((user:any) => {
+      const userData = response.data
+      const filteredUsers: any[] = []
+      userData.forEach((user: any) => {
         console.log(user)
         if (user.qualification_type === 'Certificate') {
           filteredUsers.push(user)
         }
       })
-      setUsers([...filteredUsers]);
+      setUsers([...filteredUsers])
     } catch (error) {
       console.error(error) // Handle any errors that occur during the request.
     }
@@ -121,7 +121,7 @@ const CertificationTable = () => {
       const s = localid + '/academicCertificates/' + updatedUser.id + '.' + fileExtension
 
       const upUser = {...updatedUser, certificate: s}
-    
+
       setUsers((prevUsers) => {
         return prevUsers.map((user) => {
           if (user.id === updatedUser.id) {
@@ -131,24 +131,20 @@ const CertificationTable = () => {
         })
       })
       await uploadFile(updatedUser.id, crt)
-    }
-else{
-    setUsers((prevUsers) => {
-      return prevUsers.map((user) => {
-        if (user.id === updatedUser.id) {
-          return updatedUser
-        }
-        return user
+    } else {
+      setUsers((prevUsers) => {
+        return prevUsers.map((user) => {
+          if (user.id === updatedUser.id) {
+            return updatedUser
+          }
+          return user
+        })
       })
-    })
-  }
-
-
+    }
   }
 
   useEffect(() => {
     if (users) {
-  
       fetchAcademicsByUserId(4)
       setIsLoading(false)
     }
@@ -187,7 +183,7 @@ else{
       const n = crt.certificate.name
       const fileExtension = n.split('.').pop()
       console.log(fileExtension)
-      const s = localid +'/academicCertificates/' + data.id + '.' + fileExtension
+      const s = localid + '/academicCertificates/' + data.id + '.' + fileExtension
       console.log(s)
       let upUser = {...data, certificate: s}
 
@@ -211,145 +207,149 @@ else{
     setEditUser({})
   }
 
- 
-
   return (
     <>
-    {!isLoading ? (<>  
-    
-        <div className='card-header border-0 pt-5'>
-        <h3 className='card-title align-items-start flex-column'>
-          <span className='card-label fw-bold fs-3 mb-1'>Certifications</span>
-          <span className='text-muted mt-1 fw-semibold fs-7'>Add certifications</span>
-        </h3>
-        <div className='card-toolbar'>
-          <a href='#' className='btn btn-sm btn-light-primary' onClick={openModal}>
-            <i className='ki-duotone ki-plus fs-2' />
-            Add New Certification Record
-          </a>
-        </div>
-      </div>
-      <div className='card-body py-3'>
-        <span className='card-label fs-3'>Certifications</span>
+      {!isLoading ? (
+        <>
+          <div className='card-header border-0 pt-5'>
+            <h3 className='card-title align-items-start flex-column'>
+              <span className='card-label fw-bold fs-3 mb-1'>Certifications</span>
+              <span className='text-muted mt-1 fw-semibold fs-7'>Add certifications</span>
+            </h3>
+            <div className='card-toolbar'>
+              <a href='#' className='btn btn-sm btn-primary btn-active-success' onClick={openModal}>
+                <i className='ki-duotone ki-plus fs-2' />
+                Add New Certification Record
+              </a>
+            </div>
+          </div>
+          <div className='card-body py-3'>
+            <span className='card-label fs-3'>Certifications</span>
 
-        {/* begin::Table container */}
-        <div className='table-responsive'>
-          {/* begin::Table */}
-          <table className='table align-middle gs-0 gy-4 mt-2'>
-            {/* begin::Table head */}
-            <thead>
-              <tr className='fw-bold text-muted bg-light'>
-                <th className='ps-4 min-w-155px rounded-start'>Title</th>
-                <th className='min-w-115px'>Reference</th>
-                <th className='min-w-130px'>Institute</th>
-                <th className='min-w-120px'>Location</th>
-                <th className='min-w-115px'>Duration</th>
-                <th className='min-w-120px'>Status</th>
-                <th className='min-w-115px '>Actions</th>
-              </tr>
-            </thead>
-            {/* end::Table head */}
-            {/* begin::Table body */}
-            <tbody>
-              {users.map((user) => (
-                <tr>
-                  <td>
-                    <div className='d-flex align-items-center'>
-                      <div
-                        className='symbol symbol-35px symbol-circle ms-3 me-2'
-                        data-bs-toggle='tooltip'
-                      >
-                        <span className='symbol-label bg-secondary text-inverse-warning fw-bold'>
-                          {user.qualification && user.qualification.charAt(0)}
-                        </span>
-                      </div>
-                      <div className='d-flex justify-content-start flex-column'>
-                        <a href='#' className='text-danger fw-bold text-hover-primary mb-1 fs-6'>
-                          {user.qualification}
-                        </a>
-                      </div>
-                    </div>
-                  </td>
+            {/* begin::Table container */}
+            <div className='table-responsive'>
+              {/* begin::Table */}
+              <table className='table align-middle gs-0 gy-4 mt-2'>
+                {/* begin::Table head */}
+                <thead>
+                  <tr className='fw-bold text-muted bg-light'>
+                    <th className='ps-4 min-w-155px rounded-start'>Title</th>
+                    <th className='min-w-115px'>Reference</th>
+                    <th className='min-w-130px'>Institute</th>
+                    <th className='min-w-120px'>Location</th>
+                    <th className='min-w-115px'>Duration</th>
+                    <th className='min-w-120px'>Status</th>
+                    <th className='min-w-115px '>Actions</th>
+                  </tr>
+                </thead>
+                {/* end::Table head */}
+                {/* begin::Table body */}
+                <tbody>
+                  {users.map((user) => (
+                    <tr>
+                      <td>
+                        <div className='d-flex align-items-center'>
+                          <div
+                            className='symbol symbol-35px symbol-circle ms-3 me-2'
+                            data-bs-toggle='tooltip'
+                          >
+                            <span className='symbol-label bg-success text-inverse-warning fw-bold'>
+                              {user.qualification && user.qualification.charAt(0)}
+                            </span>
+                          </div>
+                          <div className='d-flex justify-content-start flex-column'>
+                            <a
+                              href='#'
+                              className='text-danger fw-bold text-hover-primary mb-1 fs-6'
+                            >
+                              {user.qualification}
+                            </a>
+                          </div>
+                        </div>
+                      </td>
 
-                  <td className='text-center'>
-                    {user.certificate ? (
-                      <>
+                      <td className='text-center'>
+                        {user.certificate ? (
+                          <>
+                            <a
+                              href={`https://amsbackend-ghub.onrender.com/alumni/${user.certificate}`}
+                              target='_blank'
+                            >
+                              {renderResumeContent(user.certificate)}
+                            </a>
+                            {/* <td className='text-center'>{user.certificate}</td> */}
+                          </>
+                        ) : (
+                          <span className='text-center'>No File</span>
+                        )}
+                      </td>
+
+                      <td>
                         <a
-                          href={`https://amsbackend-ghub.onrender.com/alumni/${user.certificate}`}
-                          target='_blank'
+                          href='#'
+                          className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
                         >
-                          {user.certificate}
+                          {user.institute}
                         </a>
-                        {/* <td className='text-center'>{user.certificate}</td> */}
-                      </>
-                    ) : (
-                      <span className='text-center'>No File</span>
-                    )}
-                  </td>
+                      </td>
+                      <td>
+                        <a
+                          href='#'
+                          className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'
+                        >
+                          {user.institute_address}
+                        </a>
+                      </td>
+                      <td>
+                        {moment(user.start_year).format('YYYY-MM-DD')}--
+                        {moment(user.end_year).format('YYYY-MM-DD')}
+                      </td>
 
-                  <td>
-                    <a href='#' className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'>
-                      {user.institute}
-                    </a>
-                  </td>
-                  <td>
-                    <a href='#' className='text-dark fw-bold text-hover-primary d-block mb-1 fs-6'>
-                      {user.institute_address}
-                    </a>
-                  </td>
-                  <td>
-                    
+                      <td>
+                        <span className='badge badge-success fs-7 fw-bold'>{user.status} </span>
+                      </td>
 
-                  {moment(user.start_year).format('YYYY-MM-DD')}--{moment(user.end_year).format('YYYY-MM-DD')}
-                  </td>
-
-                  <td>
-                    <span className='badge badge-success fs-7 fw-bold'>{user.status} </span>
-                  </td>
-
-                  <td role='cell' className=' min-w-100px'>
-                    <a
-                      href='#'
-                      className='btn btn-light btn-active-light-primary btn-sm'
-                      data-kt-menu-trigger='click'
-                      data-kt-menu-placement='bottom-end'
-                      onClick={() => handleEditUser(user.id)}
-                    >
-                      Edit
-                    </a>
-                    <a
-                      href='#'
-                      className='btn btn-light btn-active-light-primary btn-sm'
-                      data-kt-menu-trigger='click'
-                      data-kt-menu-placement='bottom-end'
-                      onClick={() => handleDeleteUser(user.id)}
-                    >
-                      Delete
-                    </a>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {/* end::Table */}
-        </div>
-        {showModal && (
-          <AcademicModal
-            heading='Certification'
-            closeModal={closeModal}
-            addUser={handleAddUser}
-            editUser={editUser}
-            setEditUser={setEditUser}
-            updateExistingUser={updateExistingUser}
-          />
-        )}
-      </div>
-    
-      </>)
-      : <LoadingScreen/>
-       }
-
-    
+                      <td role='cell' className=' min-w-100px'>
+                        <a
+                          href='#'
+                          className='btn btn-light btn-active-light-primary btn-sm'
+                          data-kt-menu-trigger='click'
+                          data-kt-menu-placement='bottom-end'
+                          onClick={() => handleEditUser(user.id)}
+                        >
+                          Edit
+                        </a>
+                        <a
+                          href='#'
+                          className='btn btn-light btn-active-light-primary btn-sm'
+                          data-kt-menu-trigger='click'
+                          data-kt-menu-placement='bottom-end'
+                          onClick={() => handleDeleteUser(user.id)}
+                        >
+                          Delete
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {/* end::Table */}
+            </div>
+            {showModal && (
+              <AcademicModal
+                heading='Certification'
+                closeModal={closeModal}
+                addUser={handleAddUser}
+                editUser={editUser}
+                setEditUser={setEditUser}
+                updateExistingUser={updateExistingUser}
+              />
+            )}
+          </div>
+        </>
+      ) : (
+        <LoadingScreen />
+      )}
     </>
   )
 }

@@ -163,7 +163,7 @@ function ModalWork({closeModal, addUser, editUser, setEditUser, updateExistingUs
 
             <div className=' text-center'>
               <Button type='submit' className='btn btn-primary me-2 mt-2'>
-                {editUser.id ? 'Update User' : 'Add User'}
+                {editUser.id ? 'Update Experience' : 'Add Experience'}
                 {/* Save Changes */}
               </Button>
               <Button className='btn btn-secondary mt-2 ' onClick={closeModal}>

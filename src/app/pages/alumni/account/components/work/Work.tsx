@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import ModalWork from './ModalWork'
 import axios from 'axios'
+import moment from 'moment'
 
 interface Experience {
   id?: number
@@ -164,7 +165,7 @@ const Work = () => {
       <div className='card-header border-0 pt-6'>
         <div className='card-toolbar'>
           <div className='d-flex justify-content-end' data-kt-user-table-toolbar='base'>
-            <button type='button' className='btn btn-primary' onClick={openModal}>
+            <button type='button' className='btn btn-sm btn-primary btn-active-success' onClick={openModal}>
               <i className='ki-duotone ki-plus fs-2' />
               Add Work Experience
             </button>
@@ -266,11 +267,13 @@ const Work = () => {
                     {user.nature_of_job}
                   </td>
                   <td role='cell' className=''>
-                    {user.start_year}
+                    
+                    {moment(user.start_year).format('YYYY-MM-DD')}
+                    
                   </td>
 
                   <td role='cell' className=''>
-                    {user.end_year}
+                  {moment(user.end_year).format('YYYY-MM-DD')}
                   </td>
                   <td role='cell' className='text-end min-w-100px'>
                     <a

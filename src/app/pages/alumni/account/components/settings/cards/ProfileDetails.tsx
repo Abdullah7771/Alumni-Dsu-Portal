@@ -10,6 +10,7 @@ import {useFormik} from 'formik'
 import axios from 'axios'
 import moment from 'moment'
 
+import { renderResumeContent } from '../../../AccountPage'
 const localid = localStorage.getItem('sub')
 
 const profileDetailsSchema = Yup.object().shape({
@@ -46,6 +47,7 @@ const ProfileDetails: React.FC = () => {
   const handleImageClick = (imageUrl: string) => {
     setSelectedImage(imageUrl)
   }
+
 
   const handleCloseModal = () => {
     setSelectedImage(null)
@@ -168,6 +170,9 @@ const ProfileDetails: React.FC = () => {
         setLoading(false)
         return // Return early if no changes
       }
+      setTimeout(() => {
+        setLoading(true)
+      }, 1000)
       const updatedData = Object.assign(data, values)
       setData(updatedData)
       await editRecordByUserId() // Wait for the API call to complete
@@ -233,7 +238,12 @@ const ProfileDetails: React.FC = () => {
                   href={`https://amsbackend-ghub.onrender.com/alumni/${data.profile.resume}`}
                   target='_blank'
                 >
-                  <span className='fw-bold fs-6'>{data.profile.resume}</span>
+                 
+
+                  {renderResumeContent(data.profile.resume)}
+
+                
+                  {/* <span className='fw-bold fs-6'>{data.profile.resume.split('.').pop()}</span> */}
                 </a>
               </>
             ) : (
@@ -282,7 +292,7 @@ const ProfileDetails: React.FC = () => {
                       <input
                         type='file'
                         name='certificate'
-                        accept='image/*'
+                        accept='.png,.jpg,.jpeg,.doc,.docx,.html,.pdf'
                         onChange={(e: any) => {
                           handleFileChange(e)
                         }}
@@ -291,9 +301,22 @@ const ProfileDetails: React.FC = () => {
                       />
                     </div>
                     {uploadType == 'profilePic' && data.avatar ? (
-                      <span>{data.avatar}</span>
+                      <>
+                        <span> Chosen File : {data.avatar}</span>
+                        <br />
+                        <span className='text-primary fw-bold '>
+                          File Format Supported : .png .jpeg .jpg
+                        </span>
+                      </>
                     ) : uploadType == 'resume' && data.profile.resume ? (
-                      <span>{data.profile.resume}</span>
+                      <>
+                        <span>Chosen File :{data.profile.resume}</span>
+                        <br />
+
+                        <span className='text-primary fw-bold'>
+                          File Format Supported : .pdf .doc .docx .html .png .jpeg .jpg
+                        </span>
+                      </>
                     ) : (
                       <span>No File</span>
                     )}
