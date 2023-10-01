@@ -12,8 +12,8 @@ interface SurveyResponse {
 }
 
 function Survey() {
-  const handleSubmit = (answers: Record<number, string>) => {
-    console.log(answers)
+  const handleSubmit = (answers: Record<number, string>,formData:Record<number, string>) => {
+    console.log(answers,formData)
   }
 
   const [filled, setFilled] = useState(false)
