@@ -1,5 +1,6 @@
 import React, {ReactEventHandler, useEffect, useState} from 'react'
 import RangeSlider from './RangeSlider'
+import 'animate.css'
 import CreatableSelect from 'react-select/creatable'
 import {Form, Button, Container, Row, Col} from 'react-bootstrap'
 import {number} from 'yup'
@@ -30,7 +31,9 @@ interface Question {
 }
 
 interface SurveyFormProps {
-  onSubmit: (answers: Record<number | string, string>,formData:Record<number | string, string>) => void
+  onSubmit: (
+    answers: Record<number | string, string>,
+  ) => void
   setFormFilled: (filled: boolean) => void
 }
 
@@ -276,8 +279,7 @@ const SurveyForm: React.FC<SurveyFormProps> = ({onSubmit, setFormFilled}) => {
       text: 'Repute at International level',
       options: [],
       isGradeTrue: true,
-    }
-   
+    },
   ])
 
   const [answers, setAnswers] = useState<Record<number | string, string>>({})
@@ -334,7 +336,12 @@ const SurveyForm: React.FC<SurveyFormProps> = ({onSubmit, setFormFilled}) => {
   }
   const handleChangeForm = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target
+    if(name=="firstJobSalary" || name=="lastSalary"){
+      setFormData({...formData, [name]: Number(value)})
+    }
+    else{
     setFormData({...formData, [name]: value})
+    }
   }
 
   const handlePriority = (questionId: number, priority: number) => {
@@ -372,14 +379,13 @@ const SurveyForm: React.FC<SurveyFormProps> = ({onSubmit, setFormFilled}) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log(answers, grade,formData)
+    // console.log(answers, grade, formData)
     const isAnswersNotEmpty = Object.keys(answers).length > 0
 
     const isRangeSliderValid = Object.values(answers).every(
       (value) => value != undefined && value != ''
     )
-    const selectedPriorities = priorities.filter((priority) => priority > 0)
-    console.log(selectedPriorities)
+   
     const priorityQuestions = questions.filter((question) => question.isPriority)
     const hasPriorities = priorityQuestions.every(
       (question) => priorities[question.id] !== undefined && priorities[question.id] !== 0
@@ -393,9 +399,11 @@ const SurveyForm: React.FC<SurveyFormProps> = ({onSubmit, setFormFilled}) => {
       hasPriorities &&
       Object.keys(answers).length === questions.length
     ) {
-      onSubmit(answers,formData)
+      let mergeObj = {...answers, ...formData}
+      console.log(mergeObj)
+      onSubmit(mergeObj)
 
-      // postSurveyForm(answers)
+      postSurveyForm(mergeObj)
       setTimeout(() => setFormFilled(true), 3000)
     } else {
       toast('Select all answers..')
@@ -405,7 +413,7 @@ const SurveyForm: React.FC<SurveyFormProps> = ({onSubmit, setFormFilled}) => {
   return (
     <div className='container'>
       <Form onSubmit={handleSubmit}>
-        <p className='text-center font-weight-bold'>
+        <p className='fs-6 text-center font-weight-bold animate__animated animate__fadeInLeft'>
           {' '}
           (To be filled by Alumni - after the completion of each academic year).The purpose of this
           survey is to obtain alumni input on the quality of education they received and the level
@@ -414,10 +422,10 @@ const SurveyForm: React.FC<SurveyFormProps> = ({onSubmit, setFormFilled}) => {
         </p>
         <br />
         {questions.map((question) => (
-          <>
+          <div>
             {question.heading ? (
-              <h3 className='mb-4'>
-                <u>{question.heading}</u>
+              <h3 className=' text-primary fw-bolder text-decoration-underline mb-4 animate__animated animate__slideInLeft'>
+                {question.heading}
               </h3>
             ) : null}
             {question.text ? (
@@ -558,7 +566,7 @@ const SurveyForm: React.FC<SurveyFormProps> = ({onSubmit, setFormFilled}) => {
               <div>
                 {question.options.map((option) => (
                   <>
-                    <h3>{option.text}</h3>
+                    <p className='align-items-center fs-6 fw-semibold mb-3'>{option.text}</p>
                     <select
                       className='form-select mb-2'
                       value={priorities[question.id]}
@@ -582,10 +590,10 @@ const SurveyForm: React.FC<SurveyFormProps> = ({onSubmit, setFormFilled}) => {
                   {question.options.map((option) => (
                     <button
                       type='button'
-                      className={`btn btn-light-primary mb-2 ${
+                      className={`btn bg-secondary ms-4 btn-light-primary mb-2 ${
                         answers['q' + question.id] === option.text ? 'active' : ''
                       }`}
-                      style={{flex: `0 0 ${100 / question.options.length}%`}}
+                      style={{width: '30%'}}
                       data-kt-modal-bidding='option'
                       onClick={() => handleOptionChange(question.id, option.text)}
                     >
@@ -600,73 +608,83 @@ const SurveyForm: React.FC<SurveyFormProps> = ({onSubmit, setFormFilled}) => {
                 </div>
               </>
             )}
-          </>
+          </div>
         ))}
 
-        <Container>
+        <Container className='border border-primary rounded-end pb-4 '>
+          <h1 className='text-center mt-4 mb-4'>Alumni Form</h1>
           <Row>
-            <Col md={{span: 4, offset: 4}}>
-              <h1>Alumni Form</h1>
-
+            <Col md={6}>
               {/* Personal Information */}
-              <Form.Group controlId='name'>
+              <Form.Group className='mb-2' controlId='name'>
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                   type='text'
                   name='name'
                   value={formData.name}
                   onChange={handleChangeForm}
+                  placeholder='Name'
                   required
                 />
               </Form.Group>
+            </Col>
 
-              <Form.Group controlId='registrationNo'>
+            <Col md={6}>
+              <Form.Group className='mb-2' controlId='registrationNo'>
                 <Form.Label>Registration No.</Form.Label>
                 <Form.Control
-                  style={{width: '40%'}}
                   type='text'
                   name='registrationNo'
+                  placeholder='E.G BBA201929'
                   value={formData.registrationNo}
                   onChange={handleChangeForm}
                   required
                 />
               </Form.Group>
+            </Col>
 
-              <Form.Group controlId='yearOfIntake'>
+            <Col md={6}>
+              <Form.Group className='mb-2' controlId='yearOfIntake'>
                 <Form.Label>Year of Intake</Form.Label>
                 <Form.Control
                   type='number'
                   name='yearOfIntake'
+                  placeholder='Year of Admission'
                   value={formData.yearOfIntake}
                   onChange={handleChangeForm}
                   required
                 />
               </Form.Group>
-
-              <Form.Group controlId='degreeProgram'>
+            </Col>
+            <Col md={6}>
+              <Form.Group className='mb-2' controlId='degreeProgram'>
                 <Form.Label>Degree Program</Form.Label>
                 <Form.Control
                   type='text'
                   name='degreeProgram'
+                  placeholder='E.g SE,BBA,ME '
                   value={formData.degreeProgram}
                   onChange={handleChangeForm}
                   required
                 />
               </Form.Group>
+            </Col>
 
-              <Form.Group controlId='yearOfGraduation'>
+            <Col md={6}>
+              <Form.Group className='mb-2' controlId='yearOfGraduation'>
                 <Form.Label>Year of Graduation</Form.Label>
                 <Form.Control
                   type='number'
                   name='yearOfGraduation'
+                  placeholder='Graduation Year'
                   value={formData.yearOfGraduation}
                   onChange={handleChangeForm}
                   required
                 />
               </Form.Group>
-
-             
-              <Form.Group controlId='employed'>
+            </Col>
+            <Col md={6}>
+              <Form.Group className='mb-2' controlId='employed'>
                 <Form.Label>Currently Employed</Form.Label>
                 <Form.Control
                   as='select'
@@ -679,111 +697,147 @@ const SurveyForm: React.FC<SurveyFormProps> = ({onSubmit, setFormFilled}) => {
                   <option value='No'>No</option>
                 </Form.Control>
               </Form.Group>
+            </Col>
 
-              {formData.employed === 'Yes' && (
-                <>
-                  <Form.Group controlId='currentEmployer'>
+            {formData.employed === 'Yes' && (
+              <>
+                <Col md={6}>
+                  <Form.Group className='mb-2' controlId='currentEmployer'>
                     <Form.Label>Current Employer</Form.Label>
                     <Form.Control
                       type='text'
                       name='currentEmployer'
+                      placeholder='Current Company'
                       value={formData.currentEmployer}
                       onChange={handleChangeForm}
                       required
                     />
                   </Form.Group>
+                </Col>
 
-                  <Form.Group controlId='position'>
+                <Col md={6}>
+                  <Form.Group className='mb-2' controlId='position'>
                     <Form.Label>Current Position</Form.Label>
                     <Form.Control
                       type='text'
                       name='position'
+                      placeholder='Position in Current Company'
                       value={formData.position}
                       onChange={handleChangeForm}
                       required
                     />
                   </Form.Group>
+                </Col>
 
-                  <Form.Group controlId='industry'>
+                <Col md={6}>
+                  <Form.Group className='mb-2' controlId='industry'>
                     <Form.Label> Current Industry</Form.Label>
                     <Form.Control
                       type='text'
                       name='industry'
+                      placeholder='Nature of Business'
                       value={formData.industry}
                       onChange={handleChangeForm}
                       required
                     />
                   </Form.Group>
-
-                  <Form.Group controlId='employmentPeriod'>
-                    <Form.Label>Period of Employment</Form.Label>
-                    <Form.Control
-                      className='mb-2'
-                      type='date'
-                      name='firstJobEmploymentPeriod1'
-                      value={formData.employmentPeriod1}
-                      onChange={handleChangeForm}
-                      required
-                    />
-                    <p>to</p>
-                    <Form.Control
-                      className='mb-2'
-                      type='date'
-                      name='firstJobEmploymentPeriod2'
-                      value={formData.employmentPeriod2}
-                      onChange={handleChangeForm}
-                      required
-                    />
-                  </Form.Group>
-
-                  <Form.Group controlId='lastSalary'>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className='mb-2' controlId='lastSalary'>
                     <Form.Label>Last Drawn Salary</Form.Label>
                     <Form.Control
                       type='text'
                       name='lastSalary'
+                      placeholder='Last Salary'
                       value={formData.lastSalary}
                       onChange={handleChangeForm}
                       required
                     />
                   </Form.Group>
-                </>
-              )}
+                </Col>
 
-         
-              <Form.Group controlId='academicSpecialization'>
+                <Col md={6}>
+                  <Form.Group className='mb-2' controlId='employmentPeriod1'>
+                    <Form.Label>Period of Employment</Form.Label>
+                    <Form.Control
+                      className='mb-2'
+                      type='date'
+                      name='employmentPeriod1'
+                      value={formData.employmentPeriod1}
+                      onChange={handleChangeForm}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className='mb-2'>
+                    <Form.Label>Upto</Form.Label>
+                    <Form.Control
+                      className='mb-4'
+                      type='date'
+                      name='employmentPeriod2'
+                      value={formData.employmentPeriod2}
+                      onChange={handleChangeForm}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+              </>
+            )}
+
+            <Col md={6}>
+              <Form.Group className='mb-2' controlId='academicSpecialization'>
                 <Form.Label>Academic Specialization</Form.Label>
                 <Form.Control
                   type='text'
                   name='academicSpecialization'
+                  placeholder='Academic Expertise'
                   value={formData.academicSpecialization}
                   onChange={handleChangeForm}
                   required
                 />
               </Form.Group>
-
-              <Form.Group controlId='professionalSpecialization'>
+            </Col>
+            <Col md={6}>
+              <Form.Group className='mb-2' controlId='professionalSpecialization'>
                 <Form.Label>Professional Specialization</Form.Label>
                 <Form.Control
                   type='text'
                   name='professionalSpecialization'
+                  placeholder='Professional Expertise'
                   value={formData.professionalSpecialization}
                   onChange={handleChangeForm}
                   required
                 />
               </Form.Group>
-
-              <Form.Group controlId='firstJobExperienceYear'>
+            </Col>
+            <Col md={6}>
+              <Form.Group className='mb-2' controlId='firstJobExperienceYear'>
                 <Form.Label>Year of First Job Experience</Form.Label>
                 <Form.Control
                   type='number'
                   name='firstJobExperienceYear'
+                  placeholder='Year of First Job Experience(Optional)'
                   value={formData.firstJobExperienceYear}
                   onChange={handleChangeForm}
-                  required
                 />
               </Form.Group>
+            </Col>
 
-              <Form.Group controlId='firstJobEmploymentPeriod'>
+            <Col md={6}>
+              <Form.Group className='mb-2' controlId='firstJobSalary'>
+                <Form.Label>First Drawn Salary</Form.Label>
+                <Form.Control
+                  type='number'
+                  name='firstJobSalary'
+                  placeholder='First Salary(Optional)'
+                  value={formData.firstJobSalary}
+                  onChange={handleChangeForm}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className='mb-2' controlId='firstJobEmploymentPeriod'>
                 <Form.Label>Period of First Employment</Form.Label>
                 <Form.Control
                   className='mb-2'
@@ -791,47 +845,42 @@ const SurveyForm: React.FC<SurveyFormProps> = ({onSubmit, setFormFilled}) => {
                   name='firstJobEmploymentPeriod1'
                   value={formData.firstJobEmploymentPeriod1}
                   onChange={handleChangeForm}
-                  required
                 />
-                <p>to</p>
+              </Form.Group>
+            </Col>
+
+            <Col md={6}>
+              <Form.Group className='mb-2'>
+                <Form.Label>Upto</Form.Label>
                 <Form.Control
-                  className='mb-2'
                   type='date'
                   name='firstJobEmploymentPeriod2'
                   value={formData.firstJobEmploymentPeriod2}
                   onChange={handleChangeForm}
-                  required
                 />
               </Form.Group>
+            </Col>
 
-              <Form.Group controlId='firstJobSalary'>
-                <Form.Label>First Drawn Salary</Form.Label>
-                <Form.Control
-                  type='number'
-                  name='firstJobSalary'
-                  value={formData.firstJobSalary}
-                  onChange={handleChangeForm}
-                  required
-                />
-              </Form.Group>
-
-           
-              <Form.Group controlId='personalEmail'>
+            <Col md={6}>
+              <Form.Group className='mb-2' controlId='personalEmail'>
                 <Form.Label>Personal Email</Form.Label>
                 <Form.Control
                   type='email'
                   name='personalEmail'
+                  placeholder='Primary Email'
                   value={formData.personalEmail}
                   onChange={handleChangeForm}
                   required
                 />
               </Form.Group>
-
-              <Form.Group controlId='mobileContact'>
+            </Col>
+            <Col md={6}>
+              <Form.Group className='mb-2' controlId='mobileContact'>
                 <Form.Label>Mobile Contact</Form.Label>
                 <Form.Control
                   type='number'
                   name='mobileContact'
+                  placeholder='Contact Number'
                   value={formData.mobileContact}
                   onChange={handleChangeForm}
                   required

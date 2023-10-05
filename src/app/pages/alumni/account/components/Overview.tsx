@@ -13,7 +13,9 @@ import {IProfileDetails} from './settings/SettingsModel'
 import {profileDetailsInitValues} from './settings/SettingsModel'
 import axios from 'axios'
 import LoadingScreen from './LoadingScreen/LoadingScreen'
-import { renderResumeContent } from '../AccountPage'
+import {renderResumeContent} from '../AccountPage'
+
+import {Form, Button, Container, Row, Col} from 'react-bootstrap'
 
 const localid = localStorage.getItem('sub')
 
@@ -173,7 +175,7 @@ export function Overview() {
                         href={`https://amsbackend-ghub.onrender.com/alumni/${user.profile.resume}`}
                         target='_blank'
                       >
-                       {renderResumeContent(user.profile.resume)}
+                        {renderResumeContent(user.profile.resume)}
                         {/* <span className='fw-bold fs-6'>{user.profile.resume}</span> */}
                       </a>
                     </>
@@ -240,6 +242,7 @@ export function Overview() {
       ) : (
         <LoadingScreen />
       )}
+
     </>
   )
 }

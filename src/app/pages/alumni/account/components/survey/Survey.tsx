@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react'
 import SurveyFilled from './components/SurveyFilled'
 import LoadingScreen from '../LoadingScreen/LoadingScreen'
 import axios from 'axios'
+import 'animate.css';
 
 const localid = localStorage.getItem('sub')
 interface SurveyResponse {
@@ -12,8 +13,8 @@ interface SurveyResponse {
 }
 
 function Survey() {
-  const handleSubmit = (answers: Record<number, string>,formData:Record<number, string>) => {
-    console.log(answers,formData)
+  const handleSubmit = (answers: Record<number, string>) => {
+    console.log(answers)
   }
 
   const [filled, setFilled] = useState(false)
@@ -59,7 +60,7 @@ function Survey() {
             </div>
             <br />
             <div className='wrapper text-center'>
-              <h3>Welcome to Alumni Survey DSU</h3>
+              <h1 className="text-primary fw-bolder animate__animated animate__rollIn">Welcome to Alumni Survey DSU</h1>
               <br />
               <br />
             </div>
