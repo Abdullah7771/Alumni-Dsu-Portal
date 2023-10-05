@@ -1,14 +1,11 @@
-import React, {ReactEventHandler, useEffect, useState} from 'react'
-import RangeSlider from './RangeSlider'
 import 'animate.css'
-import CreatableSelect from 'react-select/creatable'
-import {Form, Button, Container, Row, Col} from 'react-bootstrap'
-import {number} from 'yup'
 import axios from 'axios'
-import PriorityForm from './components/PriorityForm'
-import AlumniForm from './components/AlumniInformation'
-import {ToastContainer, toast} from 'react-toastify'
+import React, { useEffect, useState } from 'react'
+import { Col, Container, Form, Row } from 'react-bootstrap'
+import CreatableSelect from 'react-select/creatable'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import RangeSlider from './RangeSlider'
 
 interface Option {
   id: number

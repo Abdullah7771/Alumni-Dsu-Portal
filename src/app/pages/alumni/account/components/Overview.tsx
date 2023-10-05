@@ -1,21 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {useEffect, useState} from 'react'
-import {Link} from 'react-router-dom'
-import {KTIcon} from '../../../../../_metronic/helpers'
-import moment from 'moment'
-import {
-  ChartsWidget1,
-  ListsWidget5,
-  TablesWidget1,
-  TablesWidget5,
-} from '../../../../../_metronic/partials/widgets'
-import {IProfileDetails} from './settings/SettingsModel'
-import {profileDetailsInitValues} from './settings/SettingsModel'
 import axios from 'axios'
+import moment from 'moment'
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { renderResumeContent } from '../AccountPage'
 import LoadingScreen from './LoadingScreen/LoadingScreen'
-import {renderResumeContent} from '../AccountPage'
 
-import {Form, Button, Container, Row, Col} from 'react-bootstrap'
 
 const localid = localStorage.getItem('sub')
 

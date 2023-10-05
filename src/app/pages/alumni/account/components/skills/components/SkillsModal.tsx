@@ -1,12 +1,10 @@
-import React, {ChangeEvent, useEffect, useRef, useState} from 'react'
-import CreatableSelect from 'react-select/creatable'
-import {ActionMeta} from 'react-select'
+import React, { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal'
-import moment from 'moment'
+import CreatableSelect from 'react-select/creatable'
 
-import {ErrorMessage, Formik} from 'formik'
+import { ErrorMessage, Formik } from 'formik'
 import * as Yup from 'yup'
 
 type OptionType = {

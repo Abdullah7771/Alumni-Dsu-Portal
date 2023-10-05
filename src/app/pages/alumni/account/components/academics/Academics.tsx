@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 
 import AcademicTable from './tables/AcademicTable'
 import CertificationTable from './tables/CertificationTable'

@@ -1,10 +1,10 @@
-import SurveyForm from './SurveyForm'
-import logo from '../../../assets/logo.png'
-import React, {useEffect, useState} from 'react'
-import SurveyFilled from './components/SurveyFilled'
-import LoadingScreen from '../LoadingScreen/LoadingScreen'
+import 'animate.css'
 import axios from 'axios'
-import 'animate.css';
+import { useEffect, useState } from 'react'
+import logo from '../../../assets/logo.png'
+import LoadingScreen from '../LoadingScreen/LoadingScreen'
+import SurveyForm from './SurveyForm'
+import SurveyFilled from './components/SurveyFilled'
 
 const localid = localStorage.getItem('sub')
 interface SurveyResponse {

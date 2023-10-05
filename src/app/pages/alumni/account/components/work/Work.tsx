@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react'
-import ModalWork from './ModalWork'
 import axios from 'axios'
 import moment from 'moment'
+import { useEffect, useState } from 'react'
+import ModalWork from './ModalWork'
 
 interface Experience {
   id?: number

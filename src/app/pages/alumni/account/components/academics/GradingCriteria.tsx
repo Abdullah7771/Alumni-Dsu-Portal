@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef, useState } from "react";
+import { useState } from "react";
 
 const MyForm = () => {
   const [ScoreMode, setScoreMode] = useState("CGPA");

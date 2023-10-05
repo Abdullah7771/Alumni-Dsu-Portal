@@ -1,12 +1,9 @@
-import {useState, useEffect} from 'react'
-import React from 'react'
-import SkillsModal from './SkillsModal'
+import { useEffect, useState } from 'react'
 import YourForm from './SkillsModal'
 
-import {useQuery, useMutation} from 'react-query'
 import axios from 'axios'
+import { renderResumeContent } from '../../../AccountPage'
 import LoadingScreen from '../../LoadingScreen/LoadingScreen'
-import {renderResumeContent} from '../../../AccountPage'
 
 const localid = localStorage.getItem('sub')
 

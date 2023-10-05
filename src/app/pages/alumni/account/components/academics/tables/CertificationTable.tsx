@@ -1,10 +1,9 @@
-import React from 'react'
-import {useState, useEffect} from 'react'
-import {AcademicModal} from '../AcademicModal'
 import axios from 'axios'
-import LoadingScreen from '../../LoadingScreen/LoadingScreen'
 import moment from 'moment'
-import {renderResumeContent} from '../../../AccountPage'
+import { useEffect, useState } from 'react'
+import { renderResumeContent } from '../../../AccountPage'
+import LoadingScreen from '../../LoadingScreen/LoadingScreen'
+import { AcademicModal } from '../AcademicModal'
 
 const localid = localStorage.getItem('sub')
 

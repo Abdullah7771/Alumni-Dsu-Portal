@@ -1,11 +1,11 @@
 import React from 'react'
-import { Navigate, Route, Routes, Outlet } from 'react-router-dom'
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import { PageLink, PageTitle } from '../../../../_metronic/layout/core'
+import { AccountHeader } from './AccountHeader'
 import { Overview } from './components/Overview'
+import { Academics } from './components/academics/Academics'
 import { Settings } from './components/settings/Settings'
 import { Skills } from './components/skills/Skills'
-import { AccountHeader } from './AccountHeader'
-import { Academics } from './components/academics/Academics'
 import Work from './components/work/Work'
 
 import Survey from './components/survey/Survey'
@@ -142,4 +142,4 @@ const AlumniAccountPage: React.FC = () => {
 }
 
 export default AlumniAccountPage
-export {renderResumeContent}
+export { renderResumeContent }

@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {useEffect, useState} from 'react'
-import {KTIcon, toAbsoluteUrl} from '../../../../_metronic/helpers'
-import {Link} from 'react-router-dom'
-import {Dropdown1} from '../../../../_metronic/partials'
-import {useLocation} from 'react-router'
 import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router'
+import { Link } from 'react-router-dom'
+import { KTIcon } from '../../../../_metronic/helpers'
 
 const localid = localStorage.getItem('sub')
 
@@ -278,4 +277,4 @@ const AccountHeader: React.FC = () => {
   )
 }
 
-export {AccountHeader}
+export { AccountHeader }

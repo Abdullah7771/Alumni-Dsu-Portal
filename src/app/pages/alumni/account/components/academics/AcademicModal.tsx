@@ -1,12 +1,10 @@
-import {useState, useEffect, ChangeEvent} from 'react'
-import CreatableSelect from 'react-select/creatable'
+import { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal'
 
-import moment from 'moment'
 
-import {ErrorMessage, Formik} from 'formik'
+import { ErrorMessage, Formik } from 'formik'
 import * as Yup from 'yup'
 import RangeSlider from './slider'
 
@@ -654,4 +652,5 @@ const AcademicModal: React.FC<TargetModalProps> = ({
   )
 }
 
-export {AcademicModal}
+export { AcademicModal }
+
